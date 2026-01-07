@@ -1,10 +1,19 @@
 using PokIpsoBowl_Blazor.Components;
+using PokISPOBowl_Blazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Ajoute un HttpClient pour ton API
+builder.Services.AddHttpClient("API", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7005/api/");
+});
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddSingleton<IngredientService>();
 
 var app = builder.Build();
 
