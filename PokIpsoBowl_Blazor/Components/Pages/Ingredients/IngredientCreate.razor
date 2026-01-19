@@ -1,0 +1,73 @@
+﻿@page "/ingredients/create"
+@inject PokISPOBowl_Blazor.Services.IngredientService IngredientService
+@inject NavigationManager Navigation
+@using PokIspoBowl_API.Model
+@rendermode InteractiveServer
+
+<h3>Ajouter un ingrédient</h3>
+
+<EditForm Model="@ingredient" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label class="form-label">Nom</label>
+        <InputText class="form-control" @bind-Value="ingredient.Name" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Prix supplément (€)</label>
+        <InputNumber class="form-control" @bind-Value="ingredient.SupplementPrice" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Prix extra (€)</label>
+        <InputNumber class="form-control" @bind-Value="ingredient.Price" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Type</label>
+        <InputSelect class="form-control" @bind-Value="ingredient.Type">
+            @foreach (var type in Enum.GetValues<IngredientType>())
+            {
+                <option value="@type">@type</option>
+            }
+        </InputSelect>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Image (nom du fichier)</label>
+        <InputText class="form-control" @bind-Value="ingredient.Picture" />
+    </div>
+
+    <button class="btn btn-success">
+        💾 Enregistrer
+    </button>
+    <button type="button" class="btn btn-secondary ms-2" @onclick="Cancel">
+        Annuler
+    </button>
+</EditForm>
+
+@code {
+    private Ingredient ingredient = new();
+    string ErrorMessage="";
+
+    private async Task HandleValidSubmit()
+    {
+        var success = await IngredientService.AddAsync(ingredient);
+
+        if (success)
+        {
+            Navigation.NavigateTo("/ingredients");
+        }
+        else
+        {
+            ErrorMessage = "Un ingrédient avec ce nom et ce type existe déjà.";
+        }
+    }
+
+    private void Cancel()
+    {
+        Navigation.NavigateTo("/ingredients");
+    }
+}
