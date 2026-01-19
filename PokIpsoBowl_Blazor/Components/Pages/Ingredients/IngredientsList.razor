@@ -2,13 +2,13 @@
 @page "/ing"
 @page "/ingredient"
 @page "/ingredientslist"
-@inject PokISPOBowl_Blazor.Services.IngredientService IngredientService
+@inject PokISPOBowl_Blazor.Services.IngredientService ingredientService
 @using PokIspoBowl_API.Model
 @rendermode InteractiveServer
 
 <h3>IngredientsList</h3>
 
-<h1 style="color:red;">@ErrorMessage</h1>
+<h2 style="color:red;">@ErrorMessage</h2>
 
 @if (string.IsNullOrWhiteSpace(ErrorMessage))
 {
@@ -100,22 +100,32 @@ else
 @code {
     private List<Ingredient>? ingredients;
     string ErrorMessage = "";
-    private int? IngredientIdToDelete;
-    private bool ShowDeleteModal = false;
 
     protected override async Task OnInitializedAsync()
     {
-        try 
+        try
         {
-            ingredients = await IngredientService.GetAllAsync();
+            ingredients = await ingredientService.GetAllAsync();
         }
         catch (Exception e)
         {
             ErrorMessage = "Erreur d'accès à l'API, essayez de recharger la page plus tard... " + e.Message;
 
         }
-
     }
+
+
+
+
+
+
+
+
+    
+    private int? IngredientIdToDelete;
+    private bool ShowDeleteModal = false;
+
+    
 
     private void ConfirmDelete(int id)
     {
@@ -127,8 +137,8 @@ else
     {
         if (IngredientIdToDelete.HasValue)
         {
-            await IngredientService.DeleteAsync(IngredientIdToDelete.Value);
-            ingredients = await IngredientService.GetAllAsync();
+            await ingredientService.DeleteAsync(IngredientIdToDelete.Value);
+            ingredients = await ingredientService.GetAllAsync();
         }
 
         ShowDeleteModal = false;

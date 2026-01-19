@@ -12,6 +12,7 @@ namespace PokISPOBowl_Blazor.Services
             _http = httpClientFactory.CreateClient("API");
         }
 
+
         public async Task<List<Ingredient>> GetAllAsync()
         {
             return await _http.GetFromJsonAsync<List<Ingredient>>("ingredients") ?? new List<Ingredient>();
