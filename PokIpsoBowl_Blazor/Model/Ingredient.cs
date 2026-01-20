@@ -16,15 +16,17 @@ namespace PokIspoBowl_API.Model
         [Key]
         public int IngredientId { get; set; }
 
-        [Required, MaxLength(40)]
+        [Required, MaxLength(40, ErrorMessage = "Le nom ne doit pas dépasser 40 caractères !")]
         public string Name { get; set; }
 
         // supplementPrice = surcoût quand pris en supplément
         [Required, Precision(4,2)]
+        [Range(0.00, 99.99, ErrorMessage = "Le prix doit être compris entre 0,00 et 99,99 €.")]
         public decimal SupplementPrice { get; set; }
 
         // price = prix pour ajouter cet ingrédient en plus des ingrédients de base (extra)
         [Required, Precision(4, 2)]
+        [Range(0.00, 99.99, ErrorMessage = "Le prix doit être compris entre 0,00 et 99,99 €.")]
         public decimal Price { get; set; }
 
         //Bowls preset dans lequel il est présent

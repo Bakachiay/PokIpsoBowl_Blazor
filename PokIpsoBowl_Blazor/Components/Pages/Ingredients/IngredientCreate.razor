@@ -13,16 +13,19 @@
     <div class="mb-3">
         <label class="form-label">Nom</label>
         <InputText class="form-control" @bind-Value="ingredient.Name" />
+        <ValidationMessage For="@(() => ingredient.Name)" />
     </div>
 
     <div class="mb-3">
         <label class="form-label">Prix supplément (€)</label>
         <InputNumber class="form-control" @bind-Value="ingredient.SupplementPrice" />
+        <ValidationMessage For="@(() => ingredient.SupplementPrice)" />
     </div>
 
     <div class="mb-3">
         <label class="form-label">Prix extra (€)</label>
         <InputNumber class="form-control" @bind-Value="ingredient.Price" />
+        <ValidationMessage For="@(() => ingredient.Price)" />
     </div>
 
     <div class="mb-3">
@@ -38,6 +41,7 @@
     <div class="mb-3">
         <label class="form-label">Image (nom du fichier)</label>
         <InputText class="form-control" @bind-Value="ingredient.Picture" />
+        <ValidationMessage For="@(() => ingredient.Picture)" />
     </div>
 
     <button class="btn btn-success">
